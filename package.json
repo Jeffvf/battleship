@@ -4,8 +4,15 @@
   "description": "An implementation of the Battleship game",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "webpack serve --open",
+    "build": "webpack"
   },
   "author": "Jefferson Vieira França <jefferson.vieiraf@hotmail.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.11.1"
+  }
 }
