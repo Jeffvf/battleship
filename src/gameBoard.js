@@ -1,6 +1,6 @@
 import Ship from "./ship";
 
-class gameBoard{
+class GameBoard{
   constructor(x=10, y=10){
     const board = [];
     for(let i = 0; i < x; i++){
@@ -60,4 +60,4 @@ class gameBoard{
   }
 }
 
-export default gameBoard
+export default GameBoard;
