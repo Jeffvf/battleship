@@ -1,4 +1,4 @@
-import Player from "../player";
+import Player from "../factory/player";
 
 describe('Player methods', () => {
   let player, computer;

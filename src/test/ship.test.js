@@ -1,4 +1,4 @@
-import Ship from '../ship'
+import Ship from '../factory/ship'
 
 describe('Ship methods', () => {
   let ship, destroyer;

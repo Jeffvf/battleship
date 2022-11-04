@@ -1,4 +1,4 @@
-import gameBoard from "../gameBoard";
+import gameBoard from '../factory/gameBoard';
 
 describe('Game board functions', () => {
   let board;
