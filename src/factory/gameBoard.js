@@ -11,6 +11,8 @@ class GameBoard{
       board.push(arr);
     }
 
+    this.xSquares = x;
+    this.ySquares = y;
     this.board = board;
     this.ships = [];
     this.shipCoordinates = [];
@@ -57,6 +59,10 @@ class GameBoard{
   }
   get numberOfShips(){
     return this.ships.length;
+  }
+
+  get dimensions(){
+    return [this.xSquares, this.ySquares];
   }
 }
 
