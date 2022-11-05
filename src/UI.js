@@ -13,25 +13,30 @@ const UI = (() => {
     return div;
   }
 
-  const createGrid = (boardDimensions = [10, 10]) => {
+  const createGrid = (playerBoard) => {
+    const boardDimensions = playerBoard.dimensions;
     const x = boardDimensions[0];
     const y = boardDimensions[1];
 
     const grid = createDiv(null, 'grid');
-    for(let i = 0; i < x * y; i++){
-      const square = createDiv(null, 'grid-square');
-      grid.appendChild(square);
+    for(let i = 0; i < x; i++){
+      let row = playerBoard.values[i];
+      for(let j = 0; j < y; j++){
+        const square = createDiv(null, 'grid-square');
+        if(row[j] == 1) square.style.backgroundColor = 'green';
+        grid.appendChild(square);
+      }
     }
 
     return grid;
   }
 
-  const makePlayersGrid = () => {
-    const p1 = createGrid();
-    const p2 = createGrid();
+  const makePlayersGrid = (p1, p2) => {
+    const p1Grid = createGrid(p1.board);
+    const p2Grid = createGrid(p2.board);
 
-    main.appendChild(p1);
-    main.appendChild(p2);
+    main.appendChild(p1Grid);
+    main.appendChild(p2Grid);
   }
 
   return {makePlayersGrid};
