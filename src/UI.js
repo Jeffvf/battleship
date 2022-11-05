@@ -12,7 +12,6 @@ const UI = (() => {
 
     return div;
   }
-
   const createGrid = (playerBoard) => {
     const boardDimensions = playerBoard.dimensions;
     const x = boardDimensions[0];
@@ -30,7 +29,6 @@ const UI = (() => {
 
     return grid;
   }
-
   const makePlayersGrid = (p1, p2) => {
     const p1Grid = createGrid(p1.board);
     const p2Grid = createGrid(p2.board);
@@ -38,8 +36,33 @@ const UI = (() => {
     main.appendChild(p1Grid);
     main.appendChild(p2Grid);
   }
+  const showScore = (shipCount, name) => {
+    const scoreboard = createDiv(null, 'score');
 
-  return {makePlayersGrid};
+    const ships = document.createElement('h1');
+    ships.textContent = name;
+
+    const score = document.createElement('h2');
+    score.textContent = `Ships: ${shipCount}`;
+
+    scoreboard.appendChild(ships);
+    scoreboard.appendChild(score);
+
+    return scoreboard;
+  }
+  const makeScoreboard = (p1, p2) => {
+    const p1Score = showScore(p1.board.numberOfShips, 'Player 1');
+    const p2Score = showScore(p2.board.numberOfShips, 'Computer');
+
+    header.appendChild(p1Score);
+    header.appendChild(p2Score);
+  }
+  const load = (p1, p2) => {
+    makeScoreboard(p1, p2);
+    makePlayersGrid(p1, p2)
+  }
+
+  return {load};
 })();
 
 export default UI;
