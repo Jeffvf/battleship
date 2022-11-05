@@ -19,4 +19,9 @@ describe('Game board functions', () => {
   test('Attack hits ship', () => {
     expect(board.receiveAttack(0, 1)).toStrictEqual(true);
   });
+  test('Insert multiple ships', () => {
+    board.placeShip([[3,5], [3,6], [3,7], [3,8]]);
+    board.placeShip([[6,3], [6,4], [6,5]]);
+    expect(board.numberOfShips).toBe(3);
+  })
 })

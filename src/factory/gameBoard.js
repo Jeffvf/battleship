@@ -23,11 +23,11 @@ class GameBoard{
       for(let i = 0; i < coordinates.length; i++){
         let coord = coordinates[i];
         contains = this.shipCoordinates.filter(shipCoord => {
-          shipCoord.filter(ship =>{
-              coord.includes(ship[0]) && coord.includes(ship[1])
+          return shipCoord.filter(ship => {
+              return (coord[0] === ship[0]) && (coord[1] === ship[1])
             }
-          ).length !== 0;
-        });
+          ).length != 0;
+        }).length !== 0;
         if(contains == true) break;
       }
     }
