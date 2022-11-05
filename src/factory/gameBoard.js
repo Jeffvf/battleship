@@ -60,9 +60,11 @@ class GameBoard{
   get numberOfShips(){
     return this.ships.length;
   }
-
   get dimensions(){
     return [this.xSquares, this.ySquares];
+  }
+  get values(){
+    return this.board;
   }
 }
 
