@@ -12,7 +12,7 @@ const UI = (() => {
 
     return div;
   }
-  const createGrid = (playerBoard) => {
+  const createGrid = (playerBoard, isEnemy=false) => {
     const boardDimensions = playerBoard.dimensions;
     const x = boardDimensions[0];
     const y = boardDimensions[1];
@@ -23,6 +23,7 @@ const UI = (() => {
       for(let j = 0; j < y; j++){
         const square = createDiv(null, 'grid-square');
         if(row[j] == 1) square.style.backgroundColor = 'green';
+        if(isEnemy) square.classList.add('enemy-board')
         grid.appendChild(square);
       }
     }
@@ -31,7 +32,7 @@ const UI = (() => {
   }
   const makePlayersGrid = (p1, p2) => {
     const p1Grid = createGrid(p1.board);
-    const p2Grid = createGrid(p2.board);
+    const p2Grid = createGrid(p2.board, true);
 
     main.appendChild(p1Grid);
     main.appendChild(p2Grid);
@@ -57,7 +58,13 @@ const UI = (() => {
     header.appendChild(p1Score);
     header.appendChild(p2Score);
   }
+  const resetUI = () => {
+    header.innerHTML = '';
+    main.innerHTML = '';
+    footer.innerHTML = '';
+  }
   const load = (p1, p2) => {
+    resetUI();
     makeScoreboard(p1, p2);
     makePlayersGrid(p1, p2)
   }
