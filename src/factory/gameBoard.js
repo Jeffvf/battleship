@@ -38,11 +38,6 @@ class GameBoard{
       this.shipCoordinates.push(coordinates);
     }
   }
-  shipHasSunk(index){
-    if(this.ships[index].isSunk()){
-      this.ships.splice(index, 1);
-    }
-  }
   receiveAttack(x, y){
     this.board[x][y] = 1;
     for(let i = 0; i < this.shipCoordinates.length; i++){
@@ -50,7 +45,6 @@ class GameBoard{
       for(let j = 0; j < coordinates.length; j++){
         if(x == coordinates[j][0] && y == coordinates[j][1]){
           this.ships[i].hit();
-          this.shipHasSunk(i);
           return true;
         }
       }
@@ -58,7 +52,8 @@ class GameBoard{
     return false;
   }
   get numberOfShips(){
-    return this.ships.length;
+    const count = this.ships.filter(ship => !ship.isSunk());
+    return count.length;
   }
   get dimensions(){
     return [this.xSquares, this.ySquares];
