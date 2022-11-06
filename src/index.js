@@ -1,4 +1,4 @@
 import './styles.css'
-import UI from './UI'
+import game from './game'
 
-UI.makePlayersGrid();
+game.start();
