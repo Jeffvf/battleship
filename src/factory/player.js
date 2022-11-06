@@ -38,6 +38,9 @@ class Player{
   set refreshBoard(board){
     this.gameBoard = board;
   }
+  get isAI(){
+    return this.AI;
+  }
 }
 
 export default Player;
