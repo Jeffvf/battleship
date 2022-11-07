@@ -58,6 +58,52 @@ const UI = (() => {
     header.appendChild(p1Score);
     header.appendChild(p2Score);
   }
+  const createShip = (type, size, color) => {
+    const shipBox = createDiv(null, 'ship-box');
+
+    const shipName = document.createElement('span');
+    shipName.textContent = type;
+
+    const shipShape = createDiv('ship-structure');
+    // shipShape.draggable = true;
+    shipShape.style.color = color;
+    for(let i = 0; i < size; i++){
+      const shipSquare = createDiv(null, 'ship');
+      shipSquare.style.backgroundColor = color;
+      // shipSquare.style.color = color;
+      // shipSquare.textContent = 1;
+      shipShape.appendChild(shipSquare);
+    }
+    shipBox.appendChild(shipName);
+    shipBox.appendChild(shipShape);
+
+    return shipBox;
+  }
+  const createShipsToDrag = () => {
+    const ships = createDiv('ship-group');
+    const carrier = createShip('Carrier', 5, 'Red');
+    const battleship = createShip('Battleship', 4, 'Blue');
+    const destroyer = createShip('Destroyer', 3, 'Yellow');
+    const submarine = createShip('Submarine', 3, 'Darkblue');
+    const patrolBoat = createShip('Patrol Boat', 2, 'Purple');
+
+    ships.appendChild(carrier);
+    ships.appendChild(battleship);
+    ships.appendChild(destroyer);
+    ships.appendChild(submarine);
+    ships.appendChild(patrolBoat);
+
+    return ships
+  }
+  const showShipsToDrag = () => {
+    const msg = document.createElement('span');
+    msg.textContent = 'Drag your ships to the desired position';
+
+    const ships = createShipsToDrag();
+    
+    footer.appendChild(msg);
+    footer.appendChild(ships);
+  }
   const resetUI = () => {
     header.innerHTML = '';
     main.innerHTML = '';
@@ -66,7 +112,8 @@ const UI = (() => {
   const load = (p1, p2) => {
     resetUI();
     makeScoreboard(p1, p2);
-    makePlayersGrid(p1, p2)
+    makePlayersGrid(p1, p2);
+    showShipsToDrag();
   }
 
   return {load};
