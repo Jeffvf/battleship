@@ -1,4 +1,5 @@
 const UI = (() => {
+  let currentShip = null;
   const header = document.getElementsByTagName('header')[0];
   const main = document.getElementsByTagName('main')[0];
   const footer = document.getElementsByTagName('footer')[0];
@@ -12,6 +13,50 @@ const UI = (() => {
 
     return div;
   }
+  const drop = (ev) => {
+    ev.preventDefault();
+    let data = ev.dataTransfer.getData("text/plain");
+    ev.target.setAttribute("data", data);
+    if(addShip()){
+      currentShip.parentNode.removeChild(currentShip);
+    }
+  }
+  const fillSquares = (i, j, data, board) => {
+    for(let k = 0; k < data; k++){
+      const nextSquare = board.children[i * 10 + j + k]
+      nextSquare.setAttribute('data', data);
+      nextSquare.classList.add('taken');
+    }
+  }
+  const isValidSquare = (i, j, board, data) => {
+    for(let k = 0; k < data; k++){
+      const square = board.children[i * 10 + j + k];
+      const squareClasses = [...square.classList];
+      if(square.hasAttribute('data') && squareClasses.includes('taken')){
+        return false;
+      }
+    }
+    return true;
+  }
+  const addShip = () => {
+    const board = document.getElementsByClassName('grid')[0];
+
+    for(let i = 0; i < 10; i++){
+      for(let j = 0; j < 10; j++){
+        const square = board.children[i * 10 + j];
+        let data = parseInt(square.getAttribute('data'));
+        if(isValidSquare(i, j, board, data)){
+          if(j + data - 1 < 10){
+            fillSquares(i, j, data, board);
+            return true;
+          }
+        }
+      }
+    }
+  }
+  const allowDrop = (ev) => {
+    ev.preventDefault();
+  }
   const createGrid = (playerBoard, isEnemy=false) => {
     const boardDimensions = playerBoard.dimensions;
     const x = boardDimensions[0];
@@ -23,7 +68,11 @@ const UI = (() => {
       for(let j = 0; j < y; j++){
         const square = createDiv(null, 'grid-square');
         if(row[j] == 1) square.style.backgroundColor = 'green';
-        if(isEnemy) square.classList.add('enemy-board')
+        if(isEnemy) square.classList.add('enemy-board');
+        else{
+          square.ondragover = allowDrop;
+          square.ondrop = drop;
+        }
         grid.appendChild(square);
       }
     }
@@ -58,20 +107,24 @@ const UI = (() => {
     header.appendChild(p1Score);
     header.appendChild(p2Score);
   }
+  const drag = (ev) => {
+    ev.dataTransfer.setData("text/plain", ev.toElement.childNodes.length);
+    currentShip = ev.path[1];
+  }
+  
   const createShip = (type, size, color) => {
     const shipBox = createDiv(null, 'ship-box');
 
     const shipName = document.createElement('span');
     shipName.textContent = type;
 
-    const shipShape = createDiv('ship-structure');
-    // shipShape.draggable = true;
+    const shipShape = createDiv('ship-structure', type.toLowerCase());
+    shipShape.draggable = true;
+    shipShape.ondragstart = drag;
     shipShape.style.color = color;
     for(let i = 0; i < size; i++){
       const shipSquare = createDiv(null, 'ship');
       shipSquare.style.backgroundColor = color;
-      // shipSquare.style.color = color;
-      // shipSquare.textContent = 1;
       shipShape.appendChild(shipSquare);
     }
     shipBox.appendChild(shipName);
@@ -85,7 +138,7 @@ const UI = (() => {
     const battleship = createShip('Battleship', 4, 'Blue');
     const destroyer = createShip('Destroyer', 3, 'Yellow');
     const submarine = createShip('Submarine', 3, 'Darkblue');
-    const patrolBoat = createShip('Patrol Boat', 2, 'Purple');
+    const patrolBoat = createShip('Patrol-Boat', 2, 'Purple');
 
     ships.appendChild(carrier);
     ships.appendChild(battleship);
@@ -113,7 +166,9 @@ const UI = (() => {
     resetUI();
     makeScoreboard(p1, p2);
     makePlayersGrid(p1, p2);
-    showShipsToDrag();
+    if(p1.board.numberOfShips < 5) {
+      showShipsToDrag();
+    }
   }
 
   return {load};

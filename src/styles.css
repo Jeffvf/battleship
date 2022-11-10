@@ -85,12 +85,32 @@ footer{
 }
 
 #ship-structure{
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
   height: 70%;
-  width: 100%;
 }
 
+.carrier{
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.battleship{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 80%;
+}
+
+.destroyer, .submarine{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 60%
+}
+
+.patrol-boat{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 40%;
+}
 .ship{
   border-style: solid;
   border-color: black;
@@ -99,4 +119,8 @@ footer{
 span{
   font-size: 25px;
   font-weight: bold;
+}
+
+.taken{
+  background-color: blueviolet;
 }
