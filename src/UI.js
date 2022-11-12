@@ -169,7 +169,9 @@ const UI = (() => {
   }
   const resetUI = () => {
     header.innerHTML = '';
+    const modal = document.getElementById('myModal');
     main.innerHTML = '';
+    main.appendChild(modal);
     footer.innerHTML = '';
   }
   const load = (p1, p2) => {
