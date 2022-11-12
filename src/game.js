@@ -1,7 +1,7 @@
-import UI from './UI'
-import Player from './factory/player'
+import Player from './factory/player';
 
 const game = (() => {
+  let loadUI;
   const initPlayer = (isAI=false) => {
     const player = new Player(isAI);
 
@@ -13,14 +13,12 @@ const game = (() => {
 
     return player;
   }
-
   const activateBoard = (player, opponent) => {
     const board = document.getElementsByClassName('grid')[1];
 
     for(let i = 0; i < 10; i++){
       for(let j = 0; j < 10; j++){
         const square = board.children[i * 10 + j];
-
         square.addEventListener('click', () => {
           const newBoard = player.attack(i, j, opponent.board);
 
@@ -41,7 +39,7 @@ const game = (() => {
 
   const playerTurn = (currentPlayer, nextPlayer) => {
     if(currentPlayer.isAI){
-      UI.load(nextPlayer, currentPlayer);
+      loadUI(nextPlayer, currentPlayer);
       checkVictoryCondition(currentPlayer);
       const newBoard = currentPlayer.autoAttack(nextPlayer.board);
 
@@ -49,20 +47,18 @@ const game = (() => {
       playerTurn(nextPlayer, currentPlayer);
     }
     else{
-      UI.load(currentPlayer, nextPlayer);
+      loadUI(currentPlayer, nextPlayer);
       checkVictoryCondition(currentPlayer);
       activateBoard(currentPlayer, nextPlayer);
     }
   }
 
-  const start = () => {
-    const p1 = initPlayer();
-    const p2 = initPlayer(true);
-    UI.load(p1, p2);
+  const start = (p1, p2, load) => {
+    loadUI = load;
     playerTurn(p1, p2);
   }
 
-  return {start};
+  return {start, initPlayer};
 })();
 
 export default game;
