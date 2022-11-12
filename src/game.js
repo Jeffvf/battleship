@@ -34,9 +34,12 @@ const game = (() => {
   }
 
   const checkVictoryCondition = (player) => {
+    const modal = document.getElementsByClassName('modal')[0];
+    const msg = document.getElementById('result-message');
     if(player.board.numberOfShips === 0){
-      if(player.isAI) console.log('You win!');
-      else console.log('You lose!');
+      if(player.isAI) msg.textContent = 'You win!'
+      else msg.textContent = 'You lose!';
+      modal.style.display = 'block';
     }
   }
 
