@@ -76,7 +76,8 @@ const UI = (() => {
       let row = playerBoard.values[i];
       for(let j = 0; j < y; j++){
         const square = createDiv(null, 'grid-square');
-        if(row[j] == 1) square.style.backgroundColor = 'green';
+        if(row[j] == 1) square.style.backgroundColor = 'blue';
+        else if(row[j] == 2) square.style.backgroundColor = 'red';
         if(isEnemy) square.classList.add('enemy-board');
         else{
           square.ondragover = allowDrop;

@@ -45,6 +45,7 @@ class GameBoard{
       for(let j = 0; j < coordinates.length; j++){
         if(x == coordinates[j][0] && y == coordinates[j][1]){
           this.ships[i].hit();
+          this.board[x][y] = 2;
           return true;
         }
       }
