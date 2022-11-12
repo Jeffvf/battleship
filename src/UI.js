@@ -1,4 +1,8 @@
+import game from './game';
+
 const UI = (() => {
+  let player1 ,player2;
+  let countShips = 0;
   let currentShip = null;
   const header = document.getElementsByTagName('header')[0];
   const main = document.getElementsByTagName('main')[0];
@@ -48,6 +52,11 @@ const UI = (() => {
         if(isValidSquare(i, j, board, data)){
           if(j + data - 1 < 10){
             fillSquares(i, j, data, board);
+            countShips++;
+            if(countShips == 5){
+              player1.placeShip();
+              game.start(player1, player2, load);
+            }
             return true;
           }
         }
@@ -164,11 +173,13 @@ const UI = (() => {
   }
   const load = (p1, p2) => {
     resetUI();
-    makeScoreboard(p1, p2);
-    makePlayersGrid(p1, p2);
-    if(p1.board.numberOfShips < 5) {
+    player1 = p1;
+    player2 = p2;
+    if(!p1.board.numberOfShips){
       showShipsToDrag();
     }
+    makePlayersGrid(p1, p2);
+    makeScoreboard(player1, player2);
   }
 
   return {load};
