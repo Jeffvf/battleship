@@ -20,11 +20,14 @@ const game = (() => {
       for(let j = 0; j < 10; j++){
         const square = board.children[i * 10 + j];
         square.addEventListener('click', () => {
-          const newBoard = player.attack(i, j, opponent.board);
+          const opponentBoard = opponent.board.values;
+          if(opponentBoard[i][j] == 0){
+            const newBoard = player.attack(i, j, opponent.board);
 
-          opponent.setBoard = newBoard;
+            opponent.setBoard = newBoard;
 
-          playerTurn(opponent, player);
+            playerTurn(opponent, player);
+          }
         });
       }
     }
